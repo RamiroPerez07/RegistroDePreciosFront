@@ -4,9 +4,11 @@
   background-color: green;
   border-radius: 50%; /* Esto hace que sea un círculo */
   display: inline-block; /* Asegúrate de que se muestre en línea */
+  cursor: pointer;
 }
 
 .circle-red {
+  cursor: pointer;
   width: 20px;
   height: 20px;
   background-color: red;

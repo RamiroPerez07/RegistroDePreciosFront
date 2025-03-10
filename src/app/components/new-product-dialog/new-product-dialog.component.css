@@ -1,0 +1,9 @@
+.btn-actions{
+    display: flex;
+    justify-content: end;
+}
+
+.product-input{
+    min-width: 400px;
+    width: 100%;
+}

@@ -3,7 +3,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete"
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from "@angular/material/input";
-import { IProduct } from '../../interfaces/products.interface';
+import { INewProduct, IProduct } from '../../interfaces/products.interface';
 import { map, Observable, startWith } from 'rxjs';
 import { AsyncPipe, CurrencyPipe, DatePipe, NgClass, PercentPipe } from '@angular/common';
 import { ProductsService } from '../../services/products.service';
@@ -16,6 +16,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule} from '@angular/material/icon'
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../interfaces/auth.interface';
+import { MatDialog } from '@angular/material/dialog'
+import { NewProductDialogComponent } from '../new-product-dialog/new-product-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-products',
@@ -122,5 +125,30 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     const userName = element.userRevisionStock.username || 'Usuario desconocido';
 
     return `Actualizado: ${formattedDate} \n Usuario: ${userName}`;
+  }
+
+  readonly dialog = inject(MatDialog);
+
+  readonly toastSvc = inject(ToastrService);
+
+  openNewProductDialog(){
+    const dialogRef = this.dialog.open(NewProductDialogComponent
+    /*  , {data: {name: this.name(), animal: this.animal()},}*/
+    );
+
+    dialogRef.afterClosed().subscribe((result: INewProduct) => {
+      if(result){
+        this.productsSvc.createProduct(result.description, result.token).subscribe({
+          next: () => {
+            this.toastSvc.success("Nuevo producto cargado con éxito","Producto cargado ok")
+            this.getProducts(result.token);
+          }
+        })
+      }
+    })
+  }
+
+  openNewQuoteDialog(){
+    
   }
 }

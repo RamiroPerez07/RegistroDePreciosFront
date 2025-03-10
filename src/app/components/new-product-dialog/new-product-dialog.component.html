@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Nuevo Producto</h2>
+<form (submit)="onConfirm()">
+  <mat-dialog-content>
+    <p>Ingresá la descripción del nuevo producto</p>
+    <mat-form-field class="product-input">
+      <mat-label>Producto</mat-label>
+      <input matInput [formControl]="productControl" cdkFocusInitial />
+      @if(productControl.hasError('required') && productControl.touched){
+      <mat-error>La descripción es obligatoria</mat-error>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions class="btn-actions">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button type="submit">Guardar</button>
+  </mat-dialog-actions>
+</form>

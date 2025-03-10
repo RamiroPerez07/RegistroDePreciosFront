@@ -11,7 +11,7 @@
       </mat-autocomplete>
     </mat-form-field>
   </form>
-  <button mat-flat-button>Nuevo Producto</button>
+  <button mat-flat-button (click)="openNewProductDialog()">Nuevo Producto</button>
 
 </div>
 
@@ -83,7 +83,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <div class="table-buttons">
-    <button mat-icon-button aria-label="Nuevo registro">
+    <button mat-icon-button aria-label="Nuevo registro" (click)="openNewQuoteDialog()">
       <mat-icon>add</mat-icon>
     </button>
   </div>
