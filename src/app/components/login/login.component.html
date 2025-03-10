@@ -1,0 +1,33 @@
+<div class="auth-wrapper">
+  <form class="auth-form" [formGroup]="loginGroupControl">
+      <h2>Ingresar</h2>
+      <mat-form-field class="auth-form-field">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Ej: Juan009@gmail.com" formControlName="emailControl">
+          @if(loginGroupControl.get('emailControl')?.hasError('required') &&
+              loginGroupControl.get('emailControl')?.touched){
+              <mat-error>
+              El email es obligatorio
+              </mat-error>
+          }
+      </mat-form-field>
+      <mat-form-field class="auth-form-field">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" formControlName="passwordControl">
+          @if(loginGroupControl.get('passwordControl')?.hasError('required') &&
+              loginGroupControl.get('passwordControl')?.touched){
+              <mat-error>
+              La contraseña es obligatoria
+              </mat-error>
+          }
+      </mat-form-field>
+
+      <button mat-raised-button (click)="login()">
+          <span class="icon-txt-button">
+            <mat-icon>login</mat-icon>
+            Ingresar
+          </span>
+      </button>
+
+  </form>
+</div>

@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import '../node_modules/ngx-toastr/toastr.css';
+
+*{
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.mdc-tooltip__surface{
+  max-width: 250px !important;
+  white-space: pre-line;
+  text-align: left !important;
+}

@@ -1,0 +1,33 @@
+.circle-green {
+  width: 20px;
+  height: 20px;
+  background-color: green;
+  border-radius: 50%; /* Esto hace que sea un círculo */
+  display: inline-block; /* Asegúrate de que se muestre en línea */
+}
+
+.circle-red {
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  border-radius: 50%; /* Esto hace que sea un círculo */
+  display: inline-block; /* Asegúrate de que se muestre en línea */
+}
+
+.search-product-input{
+  width: 600px;
+}
+
+.filter-panel{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.table-buttons{
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}

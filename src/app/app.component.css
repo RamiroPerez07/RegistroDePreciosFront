@@ -1,0 +1,25 @@
+header{
+  display: flex;
+  align-items: center;
+}
+
+.header-content{
+  min-height: 40px;
+  background-color: rgb(234, 234, 234);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 2000px;
+  width: 100%;
+}
+
+.header-content h1{
+  font-weight: 300;
+  color: rgb(106, 106, 106);
+  font-size: 0.9rem;
+  margin: 0px;
+}
+
+main{
+  padding: 15px 20px;
+}
