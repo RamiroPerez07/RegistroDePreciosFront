@@ -26,3 +26,13 @@ export interface IQuoteWithUsername extends Omit<IQuote, 'userRevisionStock' | '
     username: string,
   },
 }
+
+export interface INewQuote{
+  proveedor: string;
+  precio: number;
+  iva: number;
+  marca?: string;
+  stock: boolean;
+  productId: string;
+  observacion?: string;
+}

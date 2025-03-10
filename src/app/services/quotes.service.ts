@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
-import { IQuoteWithUsername } from '../interfaces/quotes.interface';
+import { INewQuote, IQuoteWithUsername } from '../interfaces/quotes.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,8 @@ export class QuotesService {
   private readonly _http = inject(HttpClient);
 
   private readonly _quotesUrl = "https://registro-de-precios.vercel.app/api/quotes/"
+
+  private readonly _newQuoteUrl = "https://registro-de-precios.vercel.app/api/quotes/"
 
   public quotes = new BehaviorSubject<IQuoteWithUsername[]>([]);
 
@@ -38,5 +40,13 @@ export class QuotesService {
         }
       )
     )
+  }
+
+  createQuote(newQuote: INewQuote, token: string){
+    return this._http.post(this._newQuoteUrl, newQuote, {
+      headers: {
+        "Authorization": "Bearer "+ token
+      }
+    })
   }
 }

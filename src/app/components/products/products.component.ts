@@ -8,7 +8,7 @@ import { map, Observable, startWith } from 'rxjs';
 import { AsyncPipe, CurrencyPipe, DatePipe, NgClass, PercentPipe } from '@angular/common';
 import { ProductsService } from '../../services/products.service';
 import { QuotesService } from '../../services/quotes.service';
-import { IQuoteWithUsername } from '../../interfaces/quotes.interface';
+import { INewQuote, IQuoteWithUsername } from '../../interfaces/quotes.interface';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -32,7 +32,7 @@ import { NewQuoteDialogComponent } from '../new-quote-dialog/new-quote-dialog.co
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['createdAt','proveedor', 'precio', 'iva', 'precioFinal', 'marca', 'stock'];
+  displayedColumns: string[] = ['createdAt','proveedor', 'precio', 'iva', 'precioFinal', 'marca', 'observacion', 'stock'];
   public quotes ! : IQuoteWithUsername[];
   dataSource = new MatTableDataSource(this.quotes);
 
@@ -54,6 +54,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   public user! : IUser | null;
 
+  selectedProduct! : IProduct | null
 
   ngOnInit() {
 
@@ -63,6 +64,12 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         if(user){
           this.getProducts(user.token)
         }
+      }
+    })
+
+    this.productsSvc.$selectedProduct.subscribe({
+      next: (product: IProduct | null) => {
+        this.selectedProduct = product
       }
     })
 
@@ -97,20 +104,31 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     return this.options.filter(option => option.description.toLowerCase().includes(filterValue));
   }
 
-  
+  deleteSelectedProduct(event: KeyboardEvent){
+    if (event.key === 'Delete' || event.key === 'Backspace') {
+      this.productsSvc.setSelectedProduct(null);
+      // Aquí puedes hacer algo específico cuando se presiona Suprimir
+    }
+  }
+
+  getQuotes(selectedProduct: IProduct, token: string){
+    this.quotesSvc.getQuotesByProductId(selectedProduct._id,token).subscribe({
+      next: (quotes: IQuoteWithUsername[]) => {
+        this.quotes = quotes;
+        this.dataSource.data = this.quotes;
+      }
+    });
+  }
 
   onOptionSelected(event: MatAutocompleteSelectedEvent){
     const selectedProduct : IProduct = event.option.value;
 
+    this.productsSvc.setSelectedProduct(selectedProduct);
+
     const token = this.user?.token
 
     if(token){
-      this.quotesSvc.getQuotesByProductId(selectedProduct._id,token).subscribe({
-        next: (quotes: IQuoteWithUsername[]) => {
-          this.quotes = quotes;
-          this.dataSource.data = this.quotes;
-        }
-      });
+      this.getQuotes(selectedProduct,token)
     }
 
   }
@@ -166,12 +184,14 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       /*  , {data: {name: this.name(), animal: this.animal()},}*/
     );
 
-    dialogRef.afterClosed().subscribe((result: INewProduct) => {
+    dialogRef.afterClosed().subscribe((result: {newQuote: INewQuote, token: string}) => {
       if(result){
-        this.productsSvc.createProduct(result.description, result.token).subscribe({
+        this.quotesSvc.createQuote(result.newQuote, result.token).subscribe({
           next: () => {
-            this.toastSvc.success("Nuevo producto cargado con éxito","Producto cargado ok")
-            this.getProducts(result.token);
+            this.toastSvc.success("Nuevo registro cargado con éxito","Registro cargado ok")
+            if(this.selectedProduct){
+              this.getQuotes(this.selectedProduct,result.token);
+            }
           },
           error: (err : HttpErrorResponse) => {
             if(err.status === 401){

@@ -4,7 +4,6 @@
 }
 
 .proveedor-input{
-    min-width: 150px;
     width: 100%;
 }
 
@@ -13,4 +12,20 @@
 .precio-input input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.field-wrapper{
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.field-wrapper>*{
+    margin: 3px;
+}
+
+.observacion-input{
+    width: 100%;
 }

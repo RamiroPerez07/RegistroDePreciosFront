@@ -20,6 +20,14 @@ export class ProductsService {
 
   constructor() {}
 
+  public selectedProduct = new BehaviorSubject<IProduct | null>(null);
+
+  $selectedProduct = this.selectedProduct.asObservable();
+
+  setSelectedProduct(product: IProduct | null){
+    this.selectedProduct.next(product);
+  }
+
   getProducts(token: string) : Observable<IProduct[]>{
     if(!token) return of([])
     return this._http.get<IProduct[]>(this._getProductsUrl, {
