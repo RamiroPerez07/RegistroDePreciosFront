@@ -19,6 +19,9 @@ import { IUser } from '../../interfaces/auth.interface';
 import { MatDialog } from '@angular/material/dialog'
 import { NewProductDialogComponent } from '../new-product-dialog/new-product-dialog.component';
 import { ToastrService } from 'ngx-toastr';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { NewQuoteDialogComponent } from '../new-quote-dialog/new-quote-dialog.component';
 
 @Component({
   selector: 'app-products',
@@ -131,6 +134,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   readonly toastSvc = inject(ToastrService);
 
+  readonly router = inject(Router);
+
   openNewProductDialog(){
     const dialogRef = this.dialog.open(NewProductDialogComponent
     /*  , {data: {name: this.name(), animal: this.animal()},}*/
@@ -142,13 +147,40 @@ export class ProductsComponent implements OnInit, AfterViewInit {
           next: () => {
             this.toastSvc.success("Nuevo producto cargado con éxito","Producto cargado ok")
             this.getProducts(result.token);
+          },
+          error: (err : HttpErrorResponse) => {
+            if(err.status === 401){
+              this.toastSvc.error("Debes iniciar sesión","Error de autenticación")
+              this.router.navigate(["/login"])
+            }
           }
         })
       }
     })
   }
 
+  readonly QuoteSvc = inject(QuotesService);
+
   openNewQuoteDialog(){
-    
+    const dialogRef = this.dialog.open(NewQuoteDialogComponent
+      /*  , {data: {name: this.name(), animal: this.animal()},}*/
+    );
+
+    dialogRef.afterClosed().subscribe((result: INewProduct) => {
+      if(result){
+        this.productsSvc.createProduct(result.description, result.token).subscribe({
+          next: () => {
+            this.toastSvc.success("Nuevo producto cargado con éxito","Producto cargado ok")
+            this.getProducts(result.token);
+          },
+          error: (err : HttpErrorResponse) => {
+            if(err.status === 401){
+              this.toastSvc.error("Debes iniciar sesión","Error de autenticación")
+              this.router.navigate(["/login"])
+            }
+          }
+        })
+      }
+    })
   }
 }

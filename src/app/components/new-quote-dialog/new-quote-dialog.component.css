@@ -1,0 +1,16 @@
+.btn-actions{
+    display: flex;
+    justify-content: end;
+}
+
+.proveedor-input{
+    min-width: 150px;
+    width: 100%;
+}
+
+/* Ocultar las flechitas del input */
+.precio-input input[type="number"]::-webkit-outer-spin-button,
+.precio-input input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
