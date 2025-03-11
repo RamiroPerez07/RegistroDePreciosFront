@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from "@angular/material/input";
 import { INewProduct, IProduct } from '../../interfaces/products.interface';
 import { map, Observable, startWith } from 'rxjs';
-import { AsyncPipe, CurrencyPipe, DatePipe, NgClass, PercentPipe } from '@angular/common';
+import { AsyncPipe, CommonModule, CurrencyPipe, DatePipe, JsonPipe, NgClass, PercentPipe } from '@angular/common';
 import { ProductsService } from '../../services/products.service';
 import { QuotesService } from '../../services/quotes.service';
 import { INewQuote, IQuoteWithUsername } from '../../interfaces/quotes.interface';
@@ -28,7 +28,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [MatAutocompleteModule,MatCheckboxModule,MatButtonModule, MatIconModule, CurrencyPipe, PercentPipe, MatTooltipModule, MatFormFieldModule, NgClass, ReactiveFormsModule, FormsModule, MatTableModule, MatSortModule, AsyncPipe, MatInputModule, DatePipe],
+  imports: [CommonModule,MatAutocompleteModule,MatCheckboxModule,MatButtonModule, MatIconModule, MatTooltipModule, MatFormFieldModule, NgClass, ReactiveFormsModule, FormsModule, MatTableModule, MatSortModule, MatInputModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
@@ -38,10 +38,21 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   public quotes ! : IQuoteWithUsername[];
   dataSource = new MatTableDataSource(this.quotes);
 
-  @ViewChild(MatSort) sort!: MatSort;
+  private _sort!: MatSort;
+
+  @ViewChild(MatSort, {
+    static: false
+  }) set matSort(ms: MatSort) {
+    this._sort = ms;
+    this.setSort();
+  }
+
+  setSort(){
+    this.dataSource.sort = this._sort;
+  }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+    this.dataSource.sort = this._sort;
   }
 
   productControl = new FormControl<string | IProduct>('');
@@ -97,13 +108,17 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       startWith(''),
       map(value => {
         const description = typeof value === 'string' ? value : value?.description;
+        this.productsSvc.setSelectedProduct(null);
+        this.quotes = [];
+        this.selection.clear();
+        this.dataSource.data = [];
         return description ? this._filter(description as string) : this.options.slice();
       }),
     );
   }
 
   displayFn(product: IProduct): string {
-    return product && product.description ? product.description : '';
+    return product && product.description ? product.description.toUpperCase() : '';
   }
 
   private _filter(description: string): IProduct[] {
@@ -112,12 +127,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     return this.options.filter(option => option.description.toLowerCase().includes(filterValue));
   }
 
-  deleteSelectedProduct(event: KeyboardEvent){
-    if (event.key === 'Delete' || event.key === 'Backspace') {
-      this.productsSvc.setSelectedProduct(null);
-      // Aquí puedes hacer algo específico cuando se presiona Suprimir
-    }
-  }
 
   getQuotes(selectedProduct: IProduct, token: string){
     this.quotesSvc.getQuotesByProductId(selectedProduct._id,token).subscribe({
@@ -125,6 +134,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         this.quotes = quotes;
         this.dataSource.data = this.quotes;
         this.selection.clear();
+        this.dataSource.sort = this._sort;
       },
       error: (err : HttpErrorResponse) => {
         if(err.status === 401){
@@ -180,6 +190,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
           next: () => {
             this.toastSvc.success("Nuevo producto cargado con éxito","Producto cargado ok")
             this.getProducts(result.token);
+            this.productsSvc.setSelectedProduct(null)
           },
           error: (err : HttpErrorResponse) => {
             if(err.status === 401){

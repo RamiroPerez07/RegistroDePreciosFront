@@ -1,0 +1,73 @@
+/* Estilos básicos para el menú lateral */
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: -250px;  /* El menú está inicialmente oculto a la derecha */
+    width: 250px;  /* Ancho del menú */
+    height: 100vh; /* Altura completa de la pantalla */
+    background-color: #333; /* Color de fondo del menú */
+    color: white;
+    transition: transform 0.3s ease; /* Efecto de deslizamiento */
+    z-index: 9999;
+}
+  
+/* Cuando el menú está abierto, se mueve hacia la izquierda */
+.side-menu.open {
+    transform: translateX(-250px); /* Desliza el menú hacia la izquierda (visible) */
+}
+  
+/* Estilos para las opciones del menú */
+.side-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.side-menu ul li {
+    padding: 15px;
+    border-bottom: 1px solid #444;
+    cursor: pointer;
+}
+
+.side-menu ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+  /* Fondo oscuro cuando el menú está abierto */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    transition: opacity 0.3s ease;
+    z-index: 999; 
+  }
+  
+.overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+.user-info-container{
+    display: flex;
+    flex-direction: column;
+    padding: 5px 15px 10px;
+}
+
+.user-info-container>span{
+    display: block;
+    margin: 5px 0px;
+}
+
+.close-drawer-btn{
+    margin: 0px 0px 0px auto;
+    display: grid;
+    place-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    cursor: pointer;
+}

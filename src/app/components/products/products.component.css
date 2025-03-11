@@ -25,10 +25,12 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 
 .table-buttons{
+  margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: end;

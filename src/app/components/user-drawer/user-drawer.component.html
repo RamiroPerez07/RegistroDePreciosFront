@@ -1,0 +1,13 @@
+<div class="side-menu" [ngClass]="{'open': menuOpen}">
+    <button mat-icon-button (click)="toggleMenu()" class="close-drawer-btn">
+        <mat-icon>close</mat-icon>
+    </button>
+    <div class="user-info-container">
+        <span>Hola, {{user?.username}}</span>
+        <span>{{user?.email}}</span>
+    </div>
+    <ul>
+      <li><a (click)="closeUserSession()">Cerrar sesión</a></li>
+    </ul>
+</div>
+<div class="overlay" [ngClass]="{'show': menuOpen}" (click)="toggleMenu()"></div>

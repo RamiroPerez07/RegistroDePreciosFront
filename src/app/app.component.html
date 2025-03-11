@@ -1,20 +1,32 @@
 <header>
   <div class="header-content">
     <h1>Registro de precios</h1>
+    @if(user){
+      <div class="user-profile" (click)="toggleUserDrawer()">
+        <div class="user-card">
+            {{user.username.at(0)?.toUpperCase()}}
+        </div>
+        <span class="username">{{user.username}}</span>
+      </div>
+    }
   </div>
+  <app-user-drawer [user]="user" />
 </header>
 
 <main class="main">
   <router-outlet />
 </main>
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+@if(loading){
+  <div class="overlay">
+    <mat-progress-spinner
+      mode="indeterminate"
+      diameter="50"
+      color="primary">
+    </mat-progress-spinner>
+  </div>
+}
+
 
 
 

@@ -37,7 +37,12 @@ export class ProductsService {
     }).pipe(
       tap(
         (products: IProduct[]) => {
-          this.products.next(products)
+
+          const sortedProducts = products.sort((a, b) => {
+            return a.description.localeCompare(b.description);
+          });
+
+          this.products.next(sortedProducts)
         }
       )
     )

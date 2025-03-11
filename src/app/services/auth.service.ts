@@ -2,6 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { IUser } from '../interfaces/auth.interface';
 import { HttpClient } from '@angular/common/http';
+import {jwtDecode} from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,8 @@ export class AuthService {
   $user = this.user.asObservable();
 
   private readonly _http = inject(HttpClient);
+
+  private readonly _router = inject(Router);
 
   constructor() {
     if(typeof window === "undefined") return
@@ -52,4 +56,51 @@ export class AuthService {
     localStorage.removeItem("price-records-user");
     this.user.next(null);
   }
+
+  checkTokenExpiration(): boolean {
+    if(typeof window === "undefined") return false;
+    // Obtener el objeto de usuario del LocalStorage
+    const user = localStorage.getItem('price-records-user');
+    
+    // Si no hay usuario guardado en el LocalStorage, redirigir al login
+    if (!user) {
+      this._router.navigate(['/login']);
+      return false;
+    }
+
+    try {
+      // Convertir el string JSON en un objeto
+      const userObject = JSON.parse(user);
+      
+      // Obtener el token del objeto
+      const token = userObject.token;
+      
+      // Si no hay token en el objeto de usuario, redirigir al login
+      if (!token) {
+        this._router.navigate(['/login']);
+        return false;
+      }
+
+      // Decodificar el token
+      const decodedToken: any = jwtDecode(token);
+      const expirationDate = decodedToken.exp * 1000; // Convertir a milisegundos
+      const currentDate = new Date().getTime();
+
+      // Verificar si el token ha expirado
+      if (expirationDate < currentDate) {
+        // El token ha expirado
+        localStorage.removeItem('price-records-user'); // Eliminar el usuario (y su token)
+        this._router.navigate(['/login']);
+        return false;
+      }
+
+      // El token sigue siendo válido
+      return true;
+
+    } catch (error) {
+      // Si hay un error al procesar el token o el objeto de usuario, redirigir al login
+      this._router.navigate(['/login']);
+      return false;
+    }
+}
 }

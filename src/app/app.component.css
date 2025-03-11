@@ -1,25 +1,66 @@
 header{
   display: flex;
   align-items: center;
+  box-shadow: 0px 0px 5px -2px;
+  background-color: rgb(247, 247, 247);
 }
 
 .header-content{
   min-height: 40px;
-  background-color: rgb(234, 234, 234);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   max-width: 2000px;
   width: 100%;
+  padding: 8px 25px;
+  margin: 0px auto;
 }
 
 .header-content h1{
-  font-weight: 300;
-  color: rgb(106, 106, 106);
+  color: grey;
   font-size: 0.9rem;
   margin: 0px;
+  font-weight: 400;
 }
 
 main{
+  margin: 0px auto;
   padding: 15px 20px;
+  max-width: 2000px;
+}
+
+.user-profile{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.user-card{
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  padding: 5px;
+  background-color: grey;
+  color: white;
+  display: grid;
+  place-items: center;
+  margin-right: 5px;
+}
+
+.username{
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);  /* Fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;  /* Asegúrate de que esté por encima de otros elementos */
 }

@@ -3,9 +3,10 @@ import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import {  SpinnerInterceptor } from './interceptors/spinner.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
@@ -18,6 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(
       withFetch(),
+      withInterceptors([SpinnerInterceptor])
     ),
     provideAnimations(),
     provideAnimationsAsync(),
