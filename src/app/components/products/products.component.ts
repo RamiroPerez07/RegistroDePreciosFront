@@ -22,17 +22,19 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NewQuoteDialogComponent } from '../new-quote-dialog/new-quote-dialog.component';
+import { SelectionModel } from '@angular/cdk/collections';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [MatAutocompleteModule,MatButtonModule, MatIconModule, CurrencyPipe, PercentPipe, MatTooltipModule, MatFormFieldModule, NgClass, ReactiveFormsModule, FormsModule, MatTableModule, MatSortModule, AsyncPipe, MatInputModule, DatePipe],
+  imports: [MatAutocompleteModule,MatCheckboxModule,MatButtonModule, MatIconModule, CurrencyPipe, PercentPipe, MatTooltipModule, MatFormFieldModule, NgClass, ReactiveFormsModule, FormsModule, MatTableModule, MatSortModule, AsyncPipe, MatInputModule, DatePipe],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['createdAt','proveedor', 'precio', 'iva', 'precioFinal', 'marca', 'observacion', 'stock'];
+  displayedColumns: string[] = ['select','createdAt','proveedor', 'precio', 'iva', 'precioFinal', 'marca', 'observacion', 'stock'];
   public quotes ! : IQuoteWithUsername[];
   dataSource = new MatTableDataSource(this.quotes);
 
@@ -80,6 +82,12 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       next: (products: IProduct[]) => {
         this.options = products;
         this.configureProductsListener()
+      },
+      error: (err : HttpErrorResponse) => {
+        if(err.status === 401){
+          this.toastSvc.error("Debes iniciar sesión","Error de autenticación")
+          this.router.navigate(["/login"])
+        }
       }
     })
   }
@@ -116,6 +124,13 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       next: (quotes: IQuoteWithUsername[]) => {
         this.quotes = quotes;
         this.dataSource.data = this.quotes;
+        this.selection.clear();
+      },
+      error: (err : HttpErrorResponse) => {
+        if(err.status === 401){
+          this.toastSvc.error("Debes iniciar sesión","Error de autenticación")
+          this.router.navigate(["/login"])
+        }
       }
     });
   }
@@ -202,5 +217,47 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         })
       }
     })
+  }
+
+  selection = new SelectionModel<IQuoteWithUsername>(true, []);
+
+  
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: IQuoteWithUsername): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.proveedor}-${row.createdAt}`;
+  }
+
+  deleteSelectedQuotes(){
+    if (Array.isArray(this.selection.selected) && this.selection.selected.length > 0 && this.user) {
+      const ids = this.selection.selected.map(quotes => quotes._id)
+      this.QuoteSvc.deleteQuotes(ids,this.user.token).subscribe({
+        next: () => {
+          this.toastSvc.success("Eliminación exitosa","Eliminación de registros");
+          if(this.user && this.selectedProduct){
+            this.getQuotes(this.selectedProduct,this.user.token)
+          }
+        }
+      })
+    }
   }
 }
