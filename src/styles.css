@@ -8,8 +8,18 @@
   box-sizing: border-box;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body, html {
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+
+.app-root{
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* Define el layout en 2 filas */
+}
+
 
 
 .mdc-tooltip__surface{
@@ -32,4 +42,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :root{
   --mdc-filled-text-field-container-color: rgb(247,247,247) !important;
+}
+
+a {
+  text-decoration: none; /* Elimina el subrayado */
+  color: inherit; /* El color será el mismo que el del texto circundante */
 }

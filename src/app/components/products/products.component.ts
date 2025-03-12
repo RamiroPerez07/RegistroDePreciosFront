@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 import { NewQuoteDialogComponent } from '../new-quote-dialog/new-quote-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { AskYNDialogComponent } from '../ask-y-n-dialog/ask-y-n-dialog.component';
 
 @Component({
   selector: 'app-products',
@@ -226,6 +227,18 @@ export class ProductsComponent implements OnInit, AfterViewInit {
             }
           }
         })
+      }
+    })
+  }
+
+  openAskYoNDeleteQuotesDialog(){
+    const dialogRef = this.dialog.open(AskYNDialogComponent
+      ,{data: {title: "Eliminar", question: "¿Desea eliminar los registros seleccionados?"}}
+    );
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if(result){
+        this.deleteSelectedQuotes();
       }
     })
   }

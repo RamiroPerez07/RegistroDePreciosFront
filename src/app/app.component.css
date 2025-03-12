@@ -23,7 +23,9 @@ header{
   font-weight: 400;
 }
 
+
 main{
+  width: 100%;
   margin: 0px auto;
   padding: 15px 20px;
   max-width: 2000px;
@@ -63,4 +65,29 @@ main{
   justify-content: center;
   align-items: center;
   z-index: 9999;  /* Asegúrate de que esté por encima de otros elementos */
+}
+
+/* El footer se coloca en la fila inferior */
+.footer {
+  background-color: rgb(247, 247, 247);
+  color: black;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 14px;
+  box-shadow: 0px 0px 5px -4px;
+}
+
+.footer .footer-content p {
+  margin: 0;
+  font-size: 0.7rem;
+}
+
+.footer a{
+  font-weight: 500;
+  transition: ease 200ms;
+}
+
+.footer a:hover{
+  transition: ease 200ms;
+  color: rgb(128, 0, 109);
 }

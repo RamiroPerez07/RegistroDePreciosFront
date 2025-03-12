@@ -35,3 +35,54 @@
   align-items: center;
   justify-content: end;
 }
+
+/* Estilos de tabla */
+/* Fijar el ancho de las columnas */
+th.mat-mdc-header-cell, td.mat-mdc-cell {
+  white-space: nowrap;
+}
+
+th.mat-mdc-header-cell.createdAt, td.mat-mdc-cell.createdAt {
+  max-width: 150px;  /* Ancho para la columna Fecha */
+}
+
+th.mat-mdc-header-cell.proveedor, td.mat-mdc.proveedor {
+  max-width: 180px;  /* Ancho para la columna Proveedor */
+}
+
+th.mat-mdc-header-cell.precio, td.mat-mdc-cell.precio {
+  max-width: 120px;  /* Ancho para la columna Precio */
+}
+
+th.mat-mdc-header-cell.iva, td.mat-mdc-cell.iva {
+  max-width: 100px;  /* Ancho para la columna IVA */
+}
+
+th.mat-mdc-header-cell.precioFinal, td.mat-mdc-cell.precioFinal {
+  max-width: 150px;  /* Ancho para la columna Precio Final */
+}
+
+th.mat-mdc-header-cell.marca, td.mat-mdc-cell.marca {
+  max-width: 120px;  /* Ancho para la columna Marca */
+}
+
+th.mat-mdc-header-cell.observacion, td.mat-mdc-cell.observacion {
+  max-width: 200px;  /* Ancho para la columna Observación */
+}
+
+th.mat-mdc-header-cell.stock, td.mat-mdc-cell.stock {
+  max-width: 100px;  /* Ancho para la columna Stock */
+}
+
+.selected-product-message{
+  font-size: 0.8rem;
+  margin: 15px 0px;
+}
+
+.selected-product-message p{
+  margin: 0px 0px !important;
+}
+
+.selected-product-message span{
+  font-weight: 600;
+}

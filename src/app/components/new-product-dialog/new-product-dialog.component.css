@@ -7,3 +7,7 @@
     min-width: 400px;
     width: 100%;
 }
+
+.dialog-title{
+    margin-bottom: 5px;
+}

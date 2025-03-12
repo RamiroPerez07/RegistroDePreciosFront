@@ -38,7 +38,13 @@ export class QuotesService {
       }),
       tap(
         (quotes : IQuoteWithUsername[]) => {
-          this.quotes.next(quotes);
+          const sortedQuotes = quotes.sort((a, b) => {
+            // Ordenar por createdAt, de la más reciente a la más vieja
+            const dateA = new Date(a.createdAt);
+            const dateB = new Date(b.createdAt);
+            return dateB.getTime() - dateA.getTime(); // De más reciente (b) a más vieja (a)
+          });
+          this.quotes.next(sortedQuotes);
         }
       )
     )

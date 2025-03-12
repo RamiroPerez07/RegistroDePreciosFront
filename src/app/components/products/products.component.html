@@ -16,6 +16,13 @@
 </div>
 
 @if(selectedProduct){
+  <div class="selected-product-message">
+    <p>Producto seleccionado: <span>{{selectedProduct.description | uppercase}}</span></p>
+    <p>Creado: <span>{{ selectedProduct.createdAt | date: 'HH:mm' }} - {{ selectedProduct.createdAt | date: 'dd/MM/yy' }}</span></p>
+  </div>
+}
+
+@if(selectedProduct){
 
   @if(quotes && quotes.length>0){
     <!-- Tabla -->
@@ -41,80 +48,81 @@
 
       <!-- CreatedAt Column -->
       <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por fecha de carga">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por fecha de carga" class="createdAt">
           Fecha
         </th>
-        <td mat-cell *matCellDef="let element" [matTooltip]="'Cargado por: ' + element.userId.username" matTooltipClass="custom-toltip" matTooltipPosition="below">{{ element.createdAt | date: 'HH:mm' }} hs {{ element.createdAt | date: 'dd/MM/yy' }}</td>
+        <td mat-cell class="createdAt" *matCellDef="let element" matTooltipPosition="below" [matTooltip]="'Cargado por: ' + element.userId.username" matTooltipClass="custom-toltip" matTooltipPosition="below">{{ element.createdAt | date: 'HH:mm' }} - {{ element.createdAt | date: 'dd/MM/yy' }}</td>
       </ng-container>
 
       <!-- Proveedor Column -->
       <ng-container matColumnDef="proveedor">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por proveedor">
+        <th class="proveedor" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por proveedor">
           Proveedor
         </th>
-        <td mat-cell *matCellDef="let element"> {{element.proveedor | uppercase}} </td>
+        <td class="proveedor" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.proveedor"> {{element.proveedor | uppercase}} </td>
       </ng-container>
 
       <!-- Precio Column -->
       <ng-container matColumnDef="precio">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por precio">
+        <th class="precio" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por precio">
           Precio
         </th>
-        <td mat-cell *matCellDef="let element"> {{element.precio | currency}} </td>
+        <td class="precio" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.precio"> {{element.precio | currency}} </td>
       </ng-container>
 
       <!-- IVA Column -->
       <ng-container matColumnDef="iva">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por IVA">
+        <th class="iva" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por IVA">
           IVA
         </th>
-        <td mat-cell *matCellDef="let element"> {{ (element.iva / 100) | percent: '1.2-2' }} </td>
+        <td class="iva" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.iva"> {{ (element.iva / 100) | percent: '1.2-2' }} </td>
       </ng-container>
 
       <!-- precio final Column -->
       <ng-container matColumnDef="precioFinal">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por precioFinal">
+        <th class="precioFinal" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por precioFinal">
           Precio Final
         </th>
-        <td mat-cell *matCellDef="let element"> {{element.precioFinal | currency}} </td>
+        <td class="precioFinal" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.precioFinal"> {{element.precioFinal | currency}} </td>
       </ng-container>
 
       <!-- Marca Column -->
       <ng-container matColumnDef="marca">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Marca">
+        <th class="marca" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Marca">
           Marca
         </th>
-        <td mat-cell *matCellDef="let element"> {{element.marca | uppercase}} </td>
+        <td class="marca" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.marca"> {{element.marca | uppercase}} </td>
       </ng-container>
 
       <!-- Observacion Column -->
       <ng-container matColumnDef="observacion">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Obs.">
+        <th class="observacion" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Obs.">
           Obs.
         </th>
-        <td mat-cell *matCellDef="let element"> {{element.observacion}} </td>
+        <td class="observacion" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.observacion"> {{element.observacion}} </td>
       </ng-container>
 
       <!-- Stock Column -->
       <ng-container matColumnDef="stock">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Stock">
+        <th class="stock" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Stock">
           Stock
         </th>
-        <td mat-cell *matCellDef="let element">
+        <td class="stock" mat-cell *matCellDef="let element">
           <div [ngClass]="{'circle-green': element.stock, 'circle-red': !element.stock}" [matTooltip]="formatTooltip(element)" matTooltipClass="custom-toltip" matTooltipPosition="below"></div>
         </td>
         
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <!-- (click)="selection.toggle(row)" => si quiero que al hacer click se active el checkbox -->
     </table>
   }
   @else {
     <div class="alert-msg"><mat-icon>alert</mat-icon>¡Aun no se han cargado registros de precios! Comenzá a agregar haciendo click en "+"</div>
   }
   <div class="table-buttons">
-    <button mat-icon-button aria-label="Borrar registro" (click)="deleteSelectedQuotes()" [disabled]="selection.selected.length===0">
+    <button mat-icon-button aria-label="Borrar registro" (click)="openAskYoNDeleteQuotesDialog()" [disabled]="selection.selected.length===0">
       <mat-icon>delete</mat-icon>
     </button>
     <button mat-icon-button aria-label="Nuevo registro" (click)="openNewQuoteDialog()">
