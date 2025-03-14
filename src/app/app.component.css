@@ -2,7 +2,7 @@ header{
   display: flex;
   align-items: center;
   box-shadow: 0px 0px 5px -2px;
-  background-color: rgb(247, 247, 247);
+  background-color: rgb(234, 234, 234);
 }
 
 .header-content{
@@ -69,7 +69,7 @@ main{
 
 /* El footer se coloca en la fila inferior */
 .footer {
-  background-color: rgb(247, 247, 247);
+  background-color: rgb(234, 234, 234);
   color: black;
   text-align: center;
   padding: 8px 0;

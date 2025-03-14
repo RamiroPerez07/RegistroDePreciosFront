@@ -36,7 +36,7 @@ import { SpinnerService } from '../../services/spinner.service';
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['select','createdAt','proveedor', 'precio', 'iva', 'precioFinal', 'marca', 'observacion', 'stock'];
+  displayedColumns: string[] = ['select','createdAt','proveedor', 'precio', 'descuento1', 'descuento2', 'descuento3' , 'iva', 'precioFinal', 'marca', 'observacion', 'stock'];
   public quotes ! : IQuoteWithUsername[];
   dataSource = new MatTableDataSource(this.quotes);
 
@@ -309,13 +309,25 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  openAskYoNDeleteProductDialog(){
+    const dialogRef = this.dialog.open(AskYNDialogComponent
+      ,{data: {title: "Eliminar", question: "¿Desea eliminar el producto seleccionado y todos sus registros de precio?"}}
+    );
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if(result){
+        this.deleteProductsWithQuotes();
+      }
+    })
+  }
+
 
 
   deleteProductsWithQuotes(){
     if(this.selectedProduct && this.user){
       this.productsSvc.deleteProduct(this.selectedProduct._id, this.user.token).subscribe({
         next: () => {
-          this.toastSvc.success("Se ha eliminado el producto y sus registros de precio","Eliminación Ok");
+          this.toastSvc.success("Se ha eliminado el producto y sus registros de precios","Eliminación Ok");
           if(this.user){
             this.getProducts(this.user?.token)
           }

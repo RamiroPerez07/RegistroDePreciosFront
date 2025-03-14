@@ -10,15 +10,14 @@
         }
       </mat-autocomplete>
     </mat-form-field>
+  </form>
+  <div class="filter-btns">
     @if(selectedProduct){
-      <button class="delete-product-btn" mat-icon-button (click)="deleteProductsWithQuotes()" [disabled]="!this.selectedProduct" matTooltip="Eliminar producto" matTooltipPosition="below">
+      <button class="delete-product-btn" mat-icon-button (click)="openAskYoNDeleteProductDialog()" [disabled]="!this.selectedProduct" matTooltip="Eliminar producto" matTooltipPosition="below">
         <mat-icon>delete</mat-icon>
       </button>
     }
-  </form>
-  <div class="filter-btns">
     <button mat-raised-button (click)="openNewProductDialog()" matTooltip="Crear nuevo producto" matTooltipPosition="below">Nuevo Producto</button>
-    
   </div>
 </div>
 
@@ -76,6 +75,30 @@
         <td class="precio" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.precio"> {{element.precio | currency}} </td>
       </ng-container>
 
+      <!-- Descuento Column -->
+      <ng-container matColumnDef="descuento1">
+        <th class="descuento" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por descuento 1">
+          Dto. 1
+        </th>
+        <td class="descuento" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.descuento1"> {{(element.descuento1 / 100) | percent: '1.2-2'}} </td>
+      </ng-container>
+
+      <!-- Descuento Column -->
+      <ng-container matColumnDef="descuento2">
+        <th class="descuento" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por descuento 2">
+          Dto. 2
+        </th>
+        <td class="descuento" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.descuento2"> {{(element.descuento2 / 100) | percent: '1.2-2'}} </td>
+      </ng-container>
+
+      <!-- Descuento Column -->
+      <ng-container matColumnDef="descuento3">
+        <th class="descuento" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por descuento 3">
+          Dto. 3
+        </th>
+        <td class="descuento" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.descuento3"> {{(element.descuento3 / 100) | percent: '1.2-2'}} </td>
+      </ng-container>
+
       <!-- IVA Column -->
       <ng-container matColumnDef="iva">
         <th class="iva" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por IVA">
@@ -83,6 +106,8 @@
         </th>
         <td class="iva" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.iva"> {{ (element.iva / 100) | percent: '1.2-2' }} </td>
       </ng-container>
+
+      
 
       <!-- precio final Column -->
       <ng-container matColumnDef="precioFinal">

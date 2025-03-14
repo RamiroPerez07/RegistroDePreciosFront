@@ -45,6 +45,38 @@
     </div>
 
     <div class="field-wrapper">
+      <!-- Desc1 -->
+      <mat-form-field class="descuento-input">
+        <mat-label>Dto. 1</mat-label>
+        <input matInput type="number" formControlName="descuento1Control" min="0" cdkFocusInitial />
+        <span matSuffix>%</span>
+        @if(newQuoteGroupControl.get('descuento1Control')?.hasError('min') && newQuoteGroupControl.get('descuento1Control')?.touched){
+        <mat-error>El descuento no puede ser menor a 0</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Desc2 -->
+      <mat-form-field class="descuento-input">
+        <mat-label>Dto. 2</mat-label>
+        <input matInput type="number" formControlName="descuento2Control" min="0" cdkFocusInitial />
+        <span matSuffix>%</span>
+        @if(newQuoteGroupControl.get('descuento2Control')?.hasError('min') && newQuoteGroupControl.get('descuento2Control')?.touched){
+        <mat-error>El descuento no puede ser menor a 0</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Desc3 -->
+      <mat-form-field class="descuento-input">
+        <mat-label>Dto. 3</mat-label>
+        <input matInput type="number" formControlName="descuento3Control" min="0" cdkFocusInitial />
+        <span matSuffix>%</span>
+        @if(newQuoteGroupControl.get('descuento3Control')?.hasError('min') && newQuoteGroupControl.get('descuento3Control')?.touched){
+        <mat-error>El descuento no puede ser menor a 0</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="field-wrapper">
       <!-- Marca -->
       <mat-form-field class="marca-input">
           <mat-label>Marca</mat-label>

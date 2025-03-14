@@ -32,10 +32,11 @@
 .filter-btns{
   display: flex;
   align-items: center;
+  margin-left: 15px;
 }
 
 .delete-product-btn{
-  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .table-buttons{
@@ -55,7 +56,7 @@ th.mat-mdc-header-cell.createdAt, td.mat-mdc-cell.createdAt {
   max-width: 150px;  /* Ancho para la columna Fecha */
 }
 
-th.mat-mdc-header-cell.proveedor, td.mat-mdc.proveedor {
+th.mat-mdc-header-cell.proveedor, td.mat-mdc-cell.proveedor {
   max-width: 180px;  /* Ancho para la columna Proveedor */
 }
 
@@ -81,6 +82,14 @@ th.mat-mdc-header-cell.observacion, td.mat-mdc-cell.observacion {
 
 th.mat-mdc-header-cell.stock, td.mat-mdc-cell.stock {
   max-width: 100px;  /* Ancho para la columna Stock */
+}
+
+th.mat-mdc-header-cell.descuento, td.mat-mdc-cell.descuento {
+  max-width: 80px;  /* Ancho para la columna Stock */
+}
+
+td.mat-mdc-cell.descuento {
+  font-weight: 300;  /* Ancho para la columna Stock */
 }
 
 .selected-product-message{

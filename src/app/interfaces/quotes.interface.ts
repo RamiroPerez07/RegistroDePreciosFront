@@ -3,6 +3,9 @@ export interface IQuote {
   proveedor: string;
   precio: number;
   iva: number;
+  descuento1: number;
+  descuento2: number;
+  descuento3: number;
   precioFinal?: number;
   marca?: string;
   stock: boolean;
@@ -30,6 +33,9 @@ export interface IQuoteWithUsername extends Omit<IQuote, 'userRevisionStock' | '
 export interface INewQuote{
   proveedor: string;
   precio: number;
+  descuento1: number;
+  descuento2: number;
+  descuento3: number;
   iva: number;
   marca?: string;
   stock: boolean;

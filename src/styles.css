@@ -48,3 +48,7 @@ a {
   text-decoration: none; /* Elimina el subrayado */
   color: inherit; /* El color será el mismo que el del texto circundante */
 }
+
+.mat-mdc-form-field-icon-suffix{
+  margin-right: 10px;
+}

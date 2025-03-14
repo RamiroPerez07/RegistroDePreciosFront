@@ -1,3 +1,8 @@
+mat-dialog-content{
+    max-width: 450px;
+    width: 100%;
+}
+
 .btn-actions{
     display: flex;
     justify-content: end;
@@ -9,7 +14,9 @@
 
 /* Ocultar las flechitas del input */
 .precio-input input[type="number"]::-webkit-outer-spin-button,
-.precio-input input[type="number"]::-webkit-inner-spin-button {
+.precio-input input[type="number"]::-webkit-inner-spin-button,
+.descuento-input input[type="number"]::-webkit-outer-spin-button,
+.descuento-input input[type="number"]::-webkit-inner-spin-button{
     -webkit-appearance: none;
     margin: 0;
 }
@@ -19,7 +26,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: start;
 }
 
 .field-wrapper>*{
@@ -29,3 +36,7 @@
 .observacion-input{
     width: 100%;
 }
+
+/*.descuento-input{
+    max-width: 80px;
+}*/
