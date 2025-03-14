@@ -72,7 +72,7 @@
         <th class="precio" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por precio">
           Precio
         </th>
-        <td class="precio" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.precio"> {{element.precio | currency}} </td>
+        <td class="precio" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.precio"> {{element.precio | currency:"ARS"}} </td>
       </ng-container>
 
       <!-- Descuento Column -->
@@ -114,7 +114,7 @@
         <th class="precioFinal" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por precioFinal">
           Precio Final
         </th>
-        <td class="precioFinal" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.precioFinal"> {{element.precioFinal | currency}} </td>
+        <td class="precioFinal" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.precioFinal"> {{element.precioFinal | currency:"ARS"}} </td>
       </ng-container>
 
       <!-- Marca Column -->
