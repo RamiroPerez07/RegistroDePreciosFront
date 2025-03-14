@@ -10,9 +10,16 @@
         }
       </mat-autocomplete>
     </mat-form-field>
+    @if(selectedProduct){
+      <button class="delete-product-btn" mat-icon-button (click)="deleteProductsWithQuotes()" [disabled]="!this.selectedProduct" matTooltip="Eliminar producto" matTooltipPosition="below">
+        <mat-icon>delete</mat-icon>
+      </button>
+    }
   </form>
-  <button mat-raised-button (click)="openNewProductDialog()">Nuevo Producto</button>
-
+  <div class="filter-btns">
+    <button mat-raised-button (click)="openNewProductDialog()" matTooltip="Crear nuevo producto" matTooltipPosition="below">Nuevo Producto</button>
+    
+  </div>
 </div>
 
 @if(selectedProduct && !loading){
@@ -121,10 +128,10 @@
     <div class="alert-msg"><mat-icon>alert</mat-icon>¡Aun no se han cargado registros de precios! Comenzá a agregar haciendo click en "+"</div>
   }
   <div class="table-buttons">
-    <button mat-icon-button aria-label="Borrar registro" (click)="openAskYoNDeleteQuotesDialog()" [disabled]="selection.selected.length===0">
+    <button mat-icon-button aria-label="Borrar registro" (click)="openAskYoNDeleteQuotesDialog()" [disabled]="selection.selected.length===0" matTooltip="Eliminar registro de precio" matTooltipPosition="below">
       <mat-icon>delete</mat-icon>
     </button>
-    <button mat-icon-button aria-label="Nuevo registro" (click)="openNewQuoteDialog()">
+    <button mat-icon-button aria-label="Nuevo registro" (click)="openNewQuoteDialog()" matTooltip="Agregar nuevo registro de precio" matTooltipPosition="below">
       <mat-icon>add</mat-icon>
     </button>
   </div>

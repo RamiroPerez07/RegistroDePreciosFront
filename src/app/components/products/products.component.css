@@ -29,6 +29,15 @@
   margin-bottom: 25px;
 }
 
+.filter-btns{
+  display: flex;
+  align-items: center;
+}
+
+.delete-product-btn{
+  margin-left: 10px;
+}
+
 .table-buttons{
   margin-top: 10px;
   display: flex;

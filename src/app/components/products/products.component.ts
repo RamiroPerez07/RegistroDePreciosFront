@@ -308,4 +308,21 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       })
     }
   }
+
+
+
+  deleteProductsWithQuotes(){
+    if(this.selectedProduct && this.user){
+      this.productsSvc.deleteProduct(this.selectedProduct._id, this.user.token).subscribe({
+        next: () => {
+          this.toastSvc.success("Se ha eliminado el producto y sus registros de precio","Eliminación Ok");
+          if(this.user){
+            this.getProducts(this.user?.token)
+          }
+          this.productControl.setValue(null); //Se resetea el buscador
+          this.productsSvc.setSelectedProduct(null); //se resetea el producto seleccionado
+        }
+      })
+    }
+  }
 }
