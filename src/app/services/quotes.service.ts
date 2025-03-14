@@ -16,6 +16,8 @@ export class QuotesService {
 
   private readonly _deleteQuotesUrl = "https://registro-de-precios.vercel.app/api/quotes/"
 
+  private readonly _updateStockStatusUrl = "https://registro-de-precios.vercel.app/api/quotes/update-stock"
+
   public quotes = new BehaviorSubject<IQuoteWithUsername[]>([]);
 
   public $quotes = this.quotes.asObservable();
@@ -61,6 +63,14 @@ export class QuotesService {
   deleteQuotes(ids: string[],token: string){
     return this._http.delete(this._deleteQuotesUrl, {
       body: {ids: ids},
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    })
+  }
+
+  updateStock(id: string, stock: boolean,token: string){
+    return this._http.put(this._updateStockStatusUrl, {id,stock},{
       headers: {
         "Authorization": "Bearer " + token
       }

@@ -15,15 +15,13 @@
 
 </div>
 
-@if(selectedProduct){
+@if(selectedProduct && !loading){
+
   <div class="selected-product-message">
     <p>Producto seleccionado: <span>{{selectedProduct.description | uppercase}}</span></p>
     <p>Creado: <span>{{ selectedProduct.createdAt | date: 'HH:mm' }} - {{ selectedProduct.createdAt | date: 'dd/MM/yy' }}</span></p>
     <p>Usuario creador: <span>{{selectedProduct.userId.username}}</span></p>
   </div>
-}
-
-@if(selectedProduct){
 
   @if(quotes && quotes.length>0){
     <!-- Tabla -->
@@ -109,7 +107,7 @@
           Stock
         </th>
         <td class="stock" mat-cell *matCellDef="let element">
-          <div [ngClass]="{'circle-green': element.stock, 'circle-red': !element.stock}" [matTooltip]="formatTooltip(element)" matTooltipClass="custom-toltip" matTooltipPosition="below"></div>
+          <div [ngClass]="{'circle-green': element.stock, 'circle-red': !element.stock}" [matTooltip]="formatTooltip(element)" matTooltipClass="custom-toltip" matTooltipPosition="below" (click)="updateStock(element._id,element.stock)"></div>
         </td>
         
       </ng-container>

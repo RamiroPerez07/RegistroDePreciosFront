@@ -25,6 +25,7 @@ import { NewQuoteDialogComponent } from '../new-quote-dialog/new-quote-dialog.co
 import { SelectionModel } from '@angular/cdk/collections';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AskYNDialogComponent } from '../ask-y-n-dialog/ask-y-n-dialog.component';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-products',
@@ -70,6 +71,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   selectedProduct! : IProduct | null
 
+  public loading ! : boolean;
+
   ngOnInit() {
 
     this.authSvc.$user.subscribe({
@@ -84,6 +87,12 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.productsSvc.$selectedProduct.subscribe({
       next: (product: IProduct | null) => {
         this.selectedProduct = product
+      }
+    })
+
+    this.loadingSvc.$loading.subscribe({
+      next: (loading: boolean) => {
+        this.loading = loading
       }
     })
 
@@ -277,6 +286,21 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       this.QuoteSvc.deleteQuotes(ids,this.user.token).subscribe({
         next: () => {
           this.toastSvc.success("Eliminación exitosa","Eliminación de registros");
+          if(this.user && this.selectedProduct){
+            this.getQuotes(this.selectedProduct,this.user.token)
+          }
+        }
+      })
+    }
+  }
+
+  loadingSvc = inject(SpinnerService);
+
+  updateStock(quoteId: string, stockStatus: boolean){
+    if(quoteId && this.user){
+      this.quotesSvc.updateStock(quoteId, !stockStatus, this.user.token).subscribe({
+        next: () => {
+          this.toastSvc.success("El estado se actualizó correctamente","Actualización de estado de stock");
           if(this.user && this.selectedProduct){
             this.getQuotes(this.selectedProduct,this.user.token)
           }
