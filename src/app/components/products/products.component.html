@@ -19,6 +19,7 @@
   <div class="selected-product-message">
     <p>Producto seleccionado: <span>{{selectedProduct.description | uppercase}}</span></p>
     <p>Creado: <span>{{ selectedProduct.createdAt | date: 'HH:mm' }} - {{ selectedProduct.createdAt | date: 'dd/MM/yy' }}</span></p>
+    <p>Usuario creador: <span>{{selectedProduct.userId.username}}</span></p>
   </div>
 }
 

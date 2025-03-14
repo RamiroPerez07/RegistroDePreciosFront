@@ -1,7 +1,10 @@
 export interface IProduct {
   _id: string;
   description: string;
-  userId: string;
+  userId: {
+    _id: string,
+    username: string,
+  };
   createdAt: Date;
   updatedAt: Date;
 }
