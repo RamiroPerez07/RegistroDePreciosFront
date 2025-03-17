@@ -246,7 +246,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   openNewQuoteDialog(){
     const dialogRef = this.dialog.open(NewQuoteDialogComponent
-      /*  , {data: {name: this.name(), animal: this.animal()},}*/
+        , {data: {title: "Nuevo registro de precio"},}
     );
 
     dialogRef.afterClosed().subscribe((result: {newQuote: INewQuote, token: string}) => {
@@ -254,6 +254,50 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         this.quotesSvc.createQuote(result.newQuote, result.token).subscribe({
           next: () => {
             this.toastSvc.success("Nuevo registro cargado con éxito","Registro cargado ok")
+            if(this.selectedProduct){
+              this.getQuotes(this.selectedProduct,result.token);
+            }
+          },
+          error: (err : HttpErrorResponse) => {
+            if(err.status === 401){
+              this.toastSvc.error("Debes iniciar sesión","Error de autenticación")
+              this.router.navigate(["/login"])
+            }
+          }
+        })
+      }
+    })
+  }
+
+  openEditQuoteDialog(){
+
+    const quoteSelected = this.selection.selected[0]
+
+    if(!quoteSelected) return
+
+    const dialogRef = this.dialog.open(NewQuoteDialogComponent, {
+      data: {
+        title: "Editar registro de precio",
+        quoteToEdit: {
+          proveedor: quoteSelected.proveedor,
+          precio: quoteSelected.precio,
+          descuento1: quoteSelected.descuento1,
+          descuento2: quoteSelected.descuento2,
+          plazo: quoteSelected.plazo,
+          iva: quoteSelected.iva,
+          marca: quoteSelected.marca,
+          stock: quoteSelected.stock,
+          observacion: quoteSelected.observacion,
+        }
+      }
+    }
+    );
+
+    dialogRef.afterClosed().subscribe((result: {newQuote: INewQuote, token: string}) => {
+      if(result && this.selection.selected){
+        this.quotesSvc.updateQuote(this.selection.selected[0]._id, result.newQuote, result.token).subscribe({
+          next: (updatedQuote) => {
+            this.toastSvc.success("Registro editado con éxito","Registro editado ok")
             if(this.selectedProduct){
               this.getQuotes(this.selectedProduct,result.token);
             }

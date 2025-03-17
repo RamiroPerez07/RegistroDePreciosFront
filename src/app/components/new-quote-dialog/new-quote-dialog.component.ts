@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox'
-import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -31,6 +31,20 @@ import { IUser } from '../../interfaces/auth.interface';
   styleUrl: './new-quote-dialog.component.css'
 })
 export class NewQuoteDialogComponent implements OnInit {
+
+  readonly data = inject<{
+    title:string,
+    quoteToEdit : {
+      proveedor?: string,
+      precio?: number,
+      descuento1?: number,
+      descuento2?: number,
+      plazo?: string,
+      iva?: number,
+      marca?: string,
+      stock?: boolean,
+      observacion?: string,
+    }}>(MAT_DIALOG_DATA);
 
   readonly dialogRef = inject(MatDialogRef<NewQuoteDialogComponent>);
 
@@ -66,6 +80,18 @@ export class NewQuoteDialogComponent implements OnInit {
         this.user = user
       } 
     })
+
+    if(this.data.quoteToEdit){
+      this.newQuoteGroupControl.get("proveedorControl")?.setValue(this.data.quoteToEdit.proveedor as string);
+      this.newQuoteGroupControl.get("precioControl")?.setValue(this.data.quoteToEdit.precio as number);
+      this.newQuoteGroupControl.get("descuento1Control")?.setValue(this.data.quoteToEdit.descuento1 as number);
+      this.newQuoteGroupControl.get("descuento2Control")?.setValue(this.data.quoteToEdit.descuento2 as number);
+      this.newQuoteGroupControl.get("plazoControl")?.setValue(this.data.quoteToEdit.plazo as string);
+      this.newQuoteGroupControl.get("ivaControl")?.setValue(this.data.quoteToEdit.iva as number);
+      this.newQuoteGroupControl.get("marcaControl")?.setValue(this.data.quoteToEdit.marca as string);
+      this.newQuoteGroupControl.get("stockControl")?.setValue(this.data.quoteToEdit.stock as boolean);
+      this.newQuoteGroupControl.get("observacionControl")?.setValue(this.data.quoteToEdit.observacion as string);
+    }
   }
 
   onConfirm(){

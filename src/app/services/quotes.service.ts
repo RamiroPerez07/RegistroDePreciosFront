@@ -18,6 +18,8 @@ export class QuotesService {
 
   private readonly _updateStockStatusUrl = "https://registro-de-precios.vercel.app/api/quotes/update-stock"
 
+  private readonly _updateQuoteUrl = "https://registro-de-precios.vercel.app/api/quotes/"
+
   public quotes = new BehaviorSubject<IQuoteWithUsername[]>([]);
 
   public $quotes = this.quotes.asObservable();
@@ -71,6 +73,14 @@ export class QuotesService {
 
   updateStock(id: string, stock: boolean,token: string){
     return this._http.put(this._updateStockStatusUrl, {id,stock},{
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    })
+  }
+
+  updateQuote(id: string, quote: INewQuote, token: string){
+    return this._http.put(this._updateQuoteUrl, {id,...quote},{
       headers: {
         "Authorization": "Bearer " + token
       }

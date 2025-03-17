@@ -13,7 +13,6 @@ export interface IQuote {
   productId: string;
   userRevisionStock: string;
   observacion?: string;
-  fechaCarga: Date;
   fechaRevisionStock: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -35,7 +34,7 @@ export interface INewQuote{
   precio: number;
   descuento1: number;
   descuento2: number;
-  plazo: string;
+  plazo?: string;
   iva: number;
   marca?: string;
   stock: boolean;

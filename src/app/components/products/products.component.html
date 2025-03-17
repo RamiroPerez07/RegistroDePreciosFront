@@ -94,13 +94,6 @@
         <td class="descuento" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.descuento2"> {{(element.descuento2 / 100) | percent: '1.2-2'}} </td>
       </ng-container>
 
-      <!-- Descuento Column -->
-      <ng-container matColumnDef="descuento3">
-        <th class="descuento" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por descuento 3">
-          Dto. 3
-        </th>
-        <td class="descuento" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.descuento3"> {{(element.descuento3 / 100) | percent: '1.2-2'}} </td>
-      </ng-container>
 
       <!-- IVA Column -->
       <ng-container matColumnDef="iva">
@@ -126,6 +119,14 @@
           Marca
         </th>
         <td class="marca" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.marca"> {{element.marca | uppercase}} </td>
+      </ng-container>
+
+      <!-- Marca Column -->
+      <ng-container matColumnDef="plazo">
+        <th class="plazo" mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por Plazo">
+          Plazo
+        </th>
+        <td class="plazo" mat-cell *matCellDef="let element" matTooltipPosition="below" [matTooltip]="element.plazo"> {{element.plazo | uppercase}} </td>
       </ng-container>
 
       <!-- Observacion Column -->
@@ -158,6 +159,9 @@
   <div class="table-buttons">
     <button mat-icon-button aria-label="Borrar registro" (click)="openAskYoNDeleteQuotesDialog()" [disabled]="selection.selected.length===0" matTooltip="Eliminar registro de precio" matTooltipPosition="below">
       <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Editar registro" (click)="openEditQuoteDialog()" [disabled]="selection.selected.length!==1" matTooltip="Editar registro de precio" matTooltipPosition="below">
+      <mat-icon>edit</mat-icon>
     </button>
     <button mat-icon-button aria-label="Nuevo registro" (click)="openNewQuoteDialog()" matTooltip="Agregar nuevo registro de precio" matTooltipPosition="below">
       <mat-icon>add</mat-icon>

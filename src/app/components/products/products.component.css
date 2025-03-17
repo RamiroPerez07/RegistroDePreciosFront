@@ -76,6 +76,10 @@ th.mat-mdc-header-cell.marca, td.mat-mdc-cell.marca {
   max-width: 120px;  /* Ancho para la columna Marca */
 }
 
+th.mat-mdc-header-cell.plazo, td.mat-mdc-cell.plazo {
+  max-width: 110px;  /* Ancho para la columna Marca */
+}
+
 th.mat-mdc-header-cell.observacion, td.mat-mdc-cell.observacion {
   max-width: 200px;  /* Ancho para la columna Observación */
 }
@@ -98,10 +102,10 @@ td.mat-mdc-cell.descuento {
 }
 
 .selected-product-message p{
-  margin: 0px 0px !important;
+  margin: 6px 0px !important;
 }
 
 .selected-product-message span{
-  font-weight: 600;
+  font-weight: 300;
   margin-right: 10px;
 }
