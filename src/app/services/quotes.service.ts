@@ -35,7 +35,7 @@ export class QuotesService {
         // Mapeo de las cotizaciones para incluir el precio final
         return quotes.map(quote => ({
           ...quote,
-          precioFinal: quote.precio * (1-quote.descuento1 / 100) * (1-quote.descuento2 / 100) * (1-quote.descuento3 / 100) * (1 + quote.iva / 100) // Calculo del precio final
+          precioFinal: quote.precio * (1-quote.descuento1 / 100) * (1-quote.descuento2 / 100) /** (1-quote.descuento3 / 100)*/ * (1 + quote.iva / 100) // Calculo del precio final
         }));
       }),
       tap(

@@ -5,7 +5,7 @@ export interface IQuote {
   iva: number;
   descuento1: number;
   descuento2: number;
-  descuento3: number;
+  plazo?: string;
   precioFinal?: number;
   marca?: string;
   stock: boolean;
@@ -35,7 +35,7 @@ export interface INewQuote{
   precio: number;
   descuento1: number;
   descuento2: number;
-  descuento3: number;
+  plazo: string;
   iva: number;
   marca?: string;
   stock: boolean;

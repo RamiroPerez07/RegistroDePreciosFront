@@ -103,4 +103,5 @@ td.mat-mdc-cell.descuento {
 
 .selected-product-message span{
   font-weight: 600;
+  margin-right: 10px;
 }

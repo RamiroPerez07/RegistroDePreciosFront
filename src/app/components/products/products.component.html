@@ -28,8 +28,8 @@
 
   <div class="selected-product-message">
     <p>Producto seleccionado: <span>{{selectedProduct.description | uppercase}}</span></p>
-    <p>Creado: <span>{{ selectedProduct.createdAt | date: 'HH:mm' }} - {{ selectedProduct.createdAt | date: 'dd/MM/yy' }}</span></p>
-    <p>Usuario creador: <span>{{selectedProduct.userId.username}}</span></p>
+    <p>Creado: <span>{{ selectedProduct.createdAt | date: 'HH:mm' }} - {{ selectedProduct.createdAt | date: 'dd/MM/yy' }}</span> Usuario: <span>{{selectedProduct.userId.username}}</span></p>
+    <p>Actualizado: <span>{{ selectedProduct.updatedAt | date: 'HH:mm' }} - {{ selectedProduct.updatedAt | date: 'dd/MM/yy' }}</span> Usuario: <span>{{selectedProduct.userRevisor.username}}</span> </p> 
   </div>
 
   @if(quotes && quotes.length>0){

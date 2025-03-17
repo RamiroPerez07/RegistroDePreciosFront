@@ -33,7 +33,7 @@
       <mat-form-field>
           <mat-label>IVA</mat-label>
           <mat-select formControlName="ivaControl">
-              <mat-option [value]="0">Sin IVA</mat-option>
+              <mat-option [value]="0">Exento</mat-option>
               <mat-option [value]="10.5">IVA 10.5%</mat-option>
               <mat-option [value]="21">IVA 21%</mat-option>
           </mat-select>
@@ -65,14 +65,10 @@
         }
       </mat-form-field>
 
-      <!-- Desc3 -->
-      <mat-form-field class="descuento-input">
-        <mat-label>Dto. 3</mat-label>
-        <input matInput type="number" formControlName="descuento3Control" min="0" cdkFocusInitial />
-        <span matSuffix>%</span>
-        @if(newQuoteGroupControl.get('descuento3Control')?.hasError('min') && newQuoteGroupControl.get('descuento3Control')?.touched){
-        <mat-error>El descuento no puede ser menor a 0</mat-error>
-        }
+      <!-- Marca -->
+      <mat-form-field class="plazo-input">
+        <mat-label>Plazo</mat-label>
+        <input matInput formControlName="plazoControl" cdkFocusInitial />
       </mat-form-field>
     </div>
 
