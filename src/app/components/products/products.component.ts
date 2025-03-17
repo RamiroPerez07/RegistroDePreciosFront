@@ -4,7 +4,7 @@ import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/mate
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from "@angular/material/input";
 import { INewProduct, IProduct } from '../../interfaces/products.interface';
-import { map, Observable, startWith } from 'rxjs';
+import { map, Observable, startWith, tap } from 'rxjs';
 import { AsyncPipe, CommonModule, CurrencyPipe, DatePipe, JsonPipe, NgClass, PercentPipe } from '@angular/common';
 import { ProductsService } from '../../services/products.service';
 import { QuotesService } from '../../services/quotes.service';
@@ -102,7 +102,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.productsSvc.getProducts(token).subscribe({
       next: (products: IProduct[]) => {
         this.options = products;
-        this.configureProductsListener()
+        this.configureProductsListener();
       },
       error: (err : HttpErrorResponse) => {
         if(err.status === 401){
@@ -113,17 +113,21 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     })
   }
 
-  configureProductsListener(){
+  configureProductsListener(selectedProduct: IProduct | null = null){
     this.filteredOptions = this.productControl.valueChanges.pipe(
       startWith(''),
       map(value => {
         const description = typeof value === 'string' ? value : value?.description;
-        this.productsSvc.setSelectedProduct(null);
+        //this.productsSvc.setSelectedProduct(null);
         this.quotes = [];
         this.selection.clear();
         this.dataSource.data = [];
         return description ? this._filter(description as string) : this.options.slice();
       }),
+      tap(() => {
+        //this.productsSvc.setSelectedProduct(selectedProduct);
+        //this.productControl.setValue(selectedProduct);
+      })
     );
   }
 
@@ -190,8 +194,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   readonly router = inject(Router);
 
   openNewProductDialog(){
-    const dialogRef = this.dialog.open(NewProductDialogComponent
-    /*  , {data: {name: this.name(), animal: this.animal()},}*/
+    const dialogRef = this.dialog.open(NewProductDialogComponent,
+     {data: {title: "Nuevo producto"},}
     );
 
     dialogRef.afterClosed().subscribe((result: INewProduct) => {
@@ -212,6 +216,31 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       }
     })
   }
+
+  openEditProduct(){
+    const dialogRef = this.dialog.open(NewProductDialogComponent,
+      {data: {title: "Editar producto", description: this.selectedProduct?.description},}
+    );
+
+    dialogRef.afterClosed().subscribe((result: INewProduct) => {
+      if(result && this.selectedProduct){
+        this.productsSvc.editProduct(this.selectedProduct._id , result.description, result.token).subscribe({
+          next: (product: IProduct) => {
+            this.toastSvc.success("Producto editado con éxito","Producto editado ok")
+            this.getProducts(result.token);
+          },
+          error: (err : HttpErrorResponse) => {
+            if(err.status === 401){
+              this.toastSvc.error("Debes iniciar sesión","Error de autenticación")
+              this.router.navigate(["/login"])
+            }
+          }
+        })
+      }
+    })
+  }
+
+
 
   readonly QuoteSvc = inject(QuotesService);
 

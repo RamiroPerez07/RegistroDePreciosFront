@@ -16,6 +16,9 @@
       <button class="delete-product-btn" mat-icon-button (click)="openAskYoNDeleteProductDialog()" [disabled]="!this.selectedProduct" matTooltip="Eliminar producto" matTooltipPosition="below">
         <mat-icon>delete</mat-icon>
       </button>
+      <button class="edit-product-btn" mat-icon-button (click)="openEditProduct()" [disabled]="!this.selectedProduct" matTooltip="Editar producto" matTooltipPosition="below">
+        <mat-icon>edit</mat-icon>
+      </button>
     }
     <button mat-raised-button (click)="openNewProductDialog()" matTooltip="Crear nuevo producto" matTooltipPosition="below">Nuevo Producto</button>
   </div>

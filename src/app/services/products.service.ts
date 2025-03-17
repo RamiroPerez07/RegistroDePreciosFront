@@ -14,7 +14,9 @@ export class ProductsService {
 
   private readonly _createProductsUrl = "https://registro-de-precios.vercel.app/api/products/";
 
-  private readonly _deleteProductUrl = "https://registro-de-precios.vercel.app/api/products/"
+  private readonly _deleteProductUrl = "https://registro-de-precios.vercel.app/api/products/";
+
+  private readonly _editProductUrl = "https://registro-de-precios.vercel.app/api/products/";
 
   public products = new BehaviorSubject<IProduct[]>([]);
 
@@ -67,5 +69,17 @@ export class ProductsService {
         "Authorization": "Bearer "+token
       }
     })
+  }
+
+  editProduct(id: string, description: string, token: string): Observable<IProduct>{
+    return this._http.put<IProduct>(this._editProductUrl,
+      {
+        id, description
+      },
+      {
+        headers: {
+          "Authorization": "Bearer "+token
+        }
+      })
   }
 }

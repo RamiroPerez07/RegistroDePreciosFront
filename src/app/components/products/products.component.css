@@ -35,7 +35,7 @@
   margin-left: 15px;
 }
 
-.delete-product-btn{
+.delete-product-btn, .edit-product-btn{
   margin-right: 10px;
 }
 

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { INewProduct } from '../../interfaces/products.interface';
@@ -25,6 +25,9 @@ import { IUser } from '../../interfaces/auth.interface';
   styleUrl: './new-product-dialog.component.css'
 })
 export class NewProductDialogComponent implements OnInit {
+
+  readonly data = inject<{title:string, description?: string}>(MAT_DIALOG_DATA);
+
   productControl = new FormControl("", [Validators.required])
 
   readonly dialogRef = inject(MatDialogRef<NewProductDialogComponent>);
@@ -39,6 +42,10 @@ export class NewProductDialogComponent implements OnInit {
         this.user = user
       }
     })
+
+    if(this.data.description){
+      this.productControl.setValue(this.data.description);
+    }
   }
 
   onNoClick(): void {
