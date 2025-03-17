@@ -105,6 +105,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       next: (products: IProduct[]) => {
         this.options = products;
         this.configureProductsListener();
+        this.productsSvc.setSelectedProduct(null);
       },
       error: (err : HttpErrorResponse) => {
         if(err.status === 401){
