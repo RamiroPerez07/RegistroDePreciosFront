@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete"
+import {MatAutocomplete, MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete"
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from "@angular/material/input";
 import { INewProduct, IProduct } from '../../interfaces/products.interface';
@@ -58,7 +58,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   productControl = new FormControl<string | IProduct>('');
+
   options!: IProduct[] 
+
   filteredOptions!: Observable<IProduct[]>;
 
   public productsSvc = inject(ProductsService);
@@ -113,21 +115,17 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     })
   }
 
-  configureProductsListener(selectedProduct: IProduct | null = null){
+  configureProductsListener(){
     this.filteredOptions = this.productControl.valueChanges.pipe(
       startWith(''),
       map(value => {
         const description = typeof value === 'string' ? value : value?.description;
-        //this.productsSvc.setSelectedProduct(null);
+        this.productsSvc.setSelectedProduct(null);
         this.quotes = [];
         this.selection.clear();
         this.dataSource.data = [];
         return description ? this._filter(description as string) : this.options.slice();
       }),
-      tap(() => {
-        //this.productsSvc.setSelectedProduct(selectedProduct);
-        //this.productControl.setValue(selectedProduct);
-      })
     );
   }
 
