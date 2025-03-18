@@ -34,6 +34,5 @@ export class UserDrawerComponent {
 	closeUserSession(){
 		this.authSvc.logout();
 		this.toggleMenu();
-		this.routerSvc.navigate(["/login"])
 	}
 }

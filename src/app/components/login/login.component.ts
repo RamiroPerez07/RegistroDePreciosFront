@@ -33,7 +33,15 @@ export class LoginComponent implements OnInit {
   user! : IUser | null;
 
   ngOnInit(): void {
-    this.authSvc.checkTokenExpiration();
+    this.authSvc.$user.subscribe({
+      next: (user: IUser | null) => {
+        this.user = user;
+        if(user && this.authSvc.checkTokenExpiration()){
+          this.router.navigate(['']);
+        }
+          
+      }
+    })
   }
 
   login(){

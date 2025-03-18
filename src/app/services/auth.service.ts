@@ -38,10 +38,7 @@ export class AuthService {
     }
   }
 
-  isAuthenticated():boolean{
-    if(typeof window === "undefined") return false;
-    return !!localStorage.getItem("price-records-user");
-  }
+
 
   login(email: string, password: string): Observable<IUser>{
     return this._http.post<IUser>(this._urlLogin,{email,password}).pipe(
@@ -55,6 +52,7 @@ export class AuthService {
   logout(){
     localStorage.removeItem("price-records-user");
     this.user.next(null);
+    this._router.navigate(['/login']);
   }
 
   checkTokenExpiration(): boolean {
