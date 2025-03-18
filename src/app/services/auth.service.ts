@@ -97,8 +97,6 @@ export class AuthService {
         return false;
       }
 
-      // El token sigue siendo válido
-      this._router.navigate(['/']);
       return true;
 
     } catch (error) {
