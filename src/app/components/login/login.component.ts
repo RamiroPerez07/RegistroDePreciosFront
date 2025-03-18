@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { IUser } from '../../interfaces/auth.interface';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   authSvc = inject(AuthService);
 
   toastSvc = inject(ToastrService);
@@ -31,6 +31,10 @@ export class LoginComponent {
   })
 
   user! : IUser | null;
+
+  ngOnInit(): void {
+    this.authSvc.checkTokenExpiration();
+  }
 
   login(){
     if(!this.loginGroupControl.valid){

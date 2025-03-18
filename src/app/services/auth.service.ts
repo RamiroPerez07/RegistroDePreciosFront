@@ -65,6 +65,7 @@ export class AuthService {
     // Si no hay usuario guardado en el LocalStorage, redirigir al login
     if (!user) {
       this._router.navigate(['/login']);
+      this.user.next(null);
       return false;
     }
 
@@ -78,6 +79,7 @@ export class AuthService {
       // Si no hay token en el objeto de usuario, redirigir al login
       if (!token) {
         this._router.navigate(['/login']);
+        this.user.next(null);
         return false;
       }
 
@@ -91,6 +93,7 @@ export class AuthService {
         // El token ha expirado
         localStorage.removeItem('price-records-user'); // Eliminar el usuario (y su token)
         this._router.navigate(['/login']);
+        this.user.next(null);
         return false;
       }
 
@@ -100,6 +103,7 @@ export class AuthService {
     } catch (error) {
       // Si hay un error al procesar el token o el objeto de usuario, redirigir al login
       this._router.navigate(['/login']);
+      this.user.next(null);
       return false;
     }
 }
