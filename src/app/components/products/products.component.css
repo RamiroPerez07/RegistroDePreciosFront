@@ -16,6 +16,10 @@
   display: inline-block; /* Asegúrate de que se muestre en línea */
 }
 
+.new-product-btn{
+  margin-right: 10px;
+}
+
 .search-product-input{
   width: 600px;
 }

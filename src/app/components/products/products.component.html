@@ -12,15 +12,22 @@
     </mat-form-field>
   </form>
   <div class="filter-btns">
+    <button mat-raised-button (click)="openNewProductDialog()" matTooltip="Crear nuevo producto" matTooltipPosition="below" class="new-product-btn">Nuevo Producto</button>
     @if(selectedProduct){
-      <button class="delete-product-btn" mat-icon-button (click)="openAskYoNDeleteProductDialog()" [disabled]="!this.selectedProduct" matTooltip="Eliminar producto" matTooltipPosition="below">
-        <mat-icon>delete</mat-icon>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+        <mat-icon>more_vert</mat-icon>
       </button>
-      <button class="edit-product-btn" mat-icon-button (click)="openEditProduct()" [disabled]="!this.selectedProduct" matTooltip="Editar producto" matTooltipPosition="below">
-        <mat-icon>edit</mat-icon>
-      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item aria-label="Editar registro" (click)="openEditProduct()" [disabled]="!this.selectedProduct" matTooltip="Editar producto" matTooltipPosition="below">
+          <mat-icon>edit</mat-icon>
+          <span>Editar</span>
+        </button>
+        <button mat-menu-item aria-label="Borrar registro" (click)="openAskYoNDeleteProductDialog()" [disabled]="!this.selectedProduct" matTooltip="Eliminar producto" matTooltipPosition="below">
+          <mat-icon>delete</mat-icon>
+          <span>Eliminar</span>
+        </button>
+      </mat-menu>
     }
-    <button mat-raised-button (click)="openNewProductDialog()" matTooltip="Crear nuevo producto" matTooltipPosition="below">Nuevo Producto</button>
   </div>
 </div>
 
@@ -157,14 +164,25 @@
     <div class="alert-msg"><mat-icon>alert</mat-icon>¡Aun no se han cargado registros de precios! Comenzá a agregar haciendo click en "+"</div>
   }
   <div class="table-buttons">
-    <button mat-icon-button aria-label="Borrar registro" (click)="openAskYoNDeleteQuotesDialog()" [disabled]="selection.selected.length===0" matTooltip="Eliminar registro de precio" matTooltipPosition="below">
-      <mat-icon>delete</mat-icon>
-    </button>
-    <button mat-icon-button aria-label="Editar registro" (click)="openEditQuoteDialog()" [disabled]="selection.selected.length!==1" matTooltip="Editar registro de precio" matTooltipPosition="below">
-      <mat-icon>edit</mat-icon>
-    </button>
     <button mat-icon-button aria-label="Nuevo registro" (click)="openNewQuoteDialog()" matTooltip="Agregar nuevo registro de precio" matTooltipPosition="below">
       <mat-icon>add</mat-icon>
     </button>
+    <button mat-icon-button [matMenuTriggerFor]="recordsmenu" aria-label="Menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #recordsmenu="matMenu">
+      <button mat-menu-item [disabled]="selection.selected.length!==1" aria-label="Editar registro" (click)="openEditQuoteDialog()" matTooltip="Editar registro de precio" matTooltipPosition="below">
+        <mat-icon>edit</mat-icon>
+        <span>Editar</span>
+      </button>
+      <button mat-menu-item [disabled]="selection.selected.length===0" aria-label="Borrar registro" (click)="openAskYoNDeleteQuotesDialog()" matTooltip="Eliminar registro de precio" matTooltipPosition="below">
+        <mat-icon>delete</mat-icon>
+        <span>Eliminar</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>download</mat-icon>
+        <span>Export</span>
+      </button>
+    </mat-menu>
   </div>
 }

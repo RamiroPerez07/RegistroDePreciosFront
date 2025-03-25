@@ -26,11 +26,12 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AskYNDialogComponent } from '../ask-y-n-dialog/ask-y-n-dialog.component';
 import { SpinnerService } from '../../services/spinner.service';
+import {MatMenuModule} from '@angular/material/menu'
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule,MatAutocompleteModule,MatCheckboxModule,MatButtonModule, MatIconModule, MatTooltipModule, MatFormFieldModule, NgClass, ReactiveFormsModule, FormsModule, MatTableModule, MatSortModule, MatInputModule],
+  imports: [CommonModule,MatMenuModule,MatAutocompleteModule,MatCheckboxModule,MatButtonModule, MatIconModule, MatTooltipModule, MatFormFieldModule, NgClass, ReactiveFormsModule, FormsModule, MatTableModule, MatSortModule, MatInputModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
